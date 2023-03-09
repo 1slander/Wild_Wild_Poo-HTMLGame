@@ -12,24 +12,21 @@ window.addEventListener("load", function () {
       this.game = game;
 
       window.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowUp") {
-          player.speedY = 10;
-          player.moveUp();
-        } else if (e.key === "ArrowDown") {
-          player.speedY = 10;
-          player.moveDown();
+        if (
+          (e.key === "ArrowUp" || e.key === "ArrowDown") &&
+          this.game.keys.indexOf(e.key) === -1
+        ) {
+          this.game.keys.push(e.key);
+          //console.log(this.game.keys);
         } else if (e.key === " ") {
           console.log("Shooting!");
         }
       });
 
       window.addEventListener("keyup", (e) => {
-        if (e.key === "ArrowUp") {
-          player.speedY = 0;
-          //player.moveUp();
-        } else if (e.key === "ArrowDown") {
-          player.speedY = 0;
-          //player.moveDown();
+        if (this.game.keys.includes(e.key)) {
+          this.game.keys.slice(this.game.keys.indexOf(e.key), 1);
+          console.log(this.game.keys);
         }
       });
     }
@@ -42,17 +39,13 @@ window.addEventListener("load", function () {
       this.y = canvas.height / 2;
       this.width = 120;
       this.height = 100;
-      this.speedY = 10;
+      this.speedY = 0;
       // this.image=new Image();
       // this.img.src=imgSrc;
       // this.width=this.image.width/scale;
       // this.height=this.image.height/scale;
     }
-
-    moveUp() {
-      this.y -= this.speedY;
-    }
-    moveDown() {
+    update() {
       this.y += this.speedY;
     }
 
@@ -71,10 +64,11 @@ window.addEventListener("load", function () {
       this.width = width;
       this.height = height;
       this.player = new Player(this);
+      this.inputs = new Inputs(this);
+      this.keys = [];
     }
     update() {
-      this.player.moveUp();
-      this.player.moveDown();
+      this.player.update();
     }
     draw(context) {
       this.player.draw(context);
