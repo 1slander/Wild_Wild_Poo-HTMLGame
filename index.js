@@ -213,7 +213,7 @@ window.addEventListener("load", function () {
       this.keys = [];
       this.gameOver == false;
       this.score = 0;
-      this.maxScore = 50;
+      this.maxScore = 5;
     }
     update(delta) {
       this.player.update();
@@ -237,6 +237,7 @@ window.addEventListener("load", function () {
             if (enemy.enemyHp === 0) {
               enemy.dead = true;
               this.score += enemy.score;
+              if (this.score === this.maxScore) this.gameOver = true;
               console.log(this.score);
             }
           }
@@ -269,18 +270,31 @@ window.addEventListener("load", function () {
       this.enemies.forEach((enemy) => {
         enemy.draw(context);
       });
+
       //GAME OVER LOGIC
-      // // if (this.gameOver === true) {
-      // //   context.style = "Black";
-      // //   context.clearRect(0, 0, canvas.width, canvas.height);
-      // //   context.style = "white";
-      // //   context.font = "40px  Helvetica";
-      // //   context.fillText("Game Over", this.width / 2, this.height / 2);
-      // //   context.fillText(
-      // //     `Score: ${this.score}`,
-      // //     this.width / 2 + 50,
-      // //     this.height / 2 + 50
-      // //   );
+      // if (this.score === this.maxScore && this.gameOver === true) {
+      //   context.style = "Black";
+      //   context.clearRect(0, 0, canvas.width, canvas.height);
+      //   context.style = "white";
+      //   context.font = "40px  Helvetica";
+      //   context.fillText("YOU WON", this.width / 2, this.height / 2);
+      //   context.fillText(
+      //     `Score: ${this.score}`,
+      //     this.width / 2 + 50,
+      //     this.height / 2 + 50
+      //   );
+      // }
+      // if (this.gameOver === true && this.playerHp === 0) {
+      //   context.style = "Black";
+      //   context.clearRect(0, 0, canvas.width, canvas.height);
+      //   context.style = "white";
+      //   context.font = "40px  Helvetica";
+      //   context.fillText("Game Over", this.width / 2, this.height / 2);
+      //   context.fillText(
+      //     `Score: ${this.score}`,
+      //     this.width / 2 + 50,
+      //     this.height / 2 + 50
+      //   );
       // }
     }
 
@@ -308,8 +322,30 @@ window.addEventListener("load", function () {
         obj1.y + obj1.height > obj2.y
       );
     }
-    gameOver() {
-      cancelAnimationFrame;
+    endGame(context) {
+      if (this.score === this.maxScore) {
+        context.style = "Black";
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.style = "white";
+        context.font = "40px  Helvetica";
+        context.fillText("YOU WON", this.width / 2, this.height / 2);
+        context.fillText(
+          `Score: ${this.score}`,
+          this.width / 2 + 50,
+          this.height / 2 + 50
+        );
+      } else if (this.playerHp === 0) {
+        context.style = "Black";
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.style = "white";
+        context.font = "40px  Helvetica";
+        context.fillText("Game Over", this.width / 2, this.height / 2);
+        context.fillText(
+          `Score: ${this.score}`,
+          this.width / 2 + 50,
+          this.height / 2 + 50
+        );
+      }
     }
   }
 
@@ -324,8 +360,12 @@ window.addEventListener("load", function () {
 
     game.update(delta);
     game.draw(ctx);
-
-    requestAnimationFrame(startGame);
+    if (game.gameOver) {
+      game.endGame(ctx);
+      cancelAnimationFrame;
+    } else {
+      requestAnimationFrame(startGame);
+    }
   }
 
   startGame(0);
