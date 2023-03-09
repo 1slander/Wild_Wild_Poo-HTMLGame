@@ -240,6 +240,11 @@ window.addEventListener("load", function () {
       this.enemies.forEach((enemy) => {
         enemy.draw(context);
       });
+      if (this.pooBullets === 0) {
+        context.style = "white";
+        context.font = "40px  Helvetica";
+        context.fillText("RECHARGE", this.width / 2, this.height / 2);
+      }
     }
 
     incrementBullets() {
