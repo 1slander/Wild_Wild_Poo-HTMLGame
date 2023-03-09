@@ -1,7 +1,7 @@
 window.addEventListener("load", function () {
   const canvas = document.getElementById("board");
   const ctx = canvas.getContext("2d");
-  console.log(ctx);
+
   canvas.width = 500;
   canvas.height = 700;
   const scale = 6;
@@ -18,6 +18,7 @@ window.addEventListener("load", function () {
         ) {
           this.game.keys.push(e.key);
         } else if (e.key === " ") {
+          this.game.player.shootPoo();
           console.log("Shooting!");
         }
       });
@@ -30,6 +31,30 @@ window.addEventListener("load", function () {
     }
   }
   // Classes
+  class Bullets {
+    constructor(game) {
+      this.game = game;
+      this.x = this.game.player.x;
+      this.y = this.game.player.y;
+      this.width = 40;
+      this.height = 40;
+      this.speedX = 5;
+      this.scale = 1;
+      // this.image=new Image();
+      // this.img.src=imgSrc;
+      // this.width=this.image.width/scale;
+      // this.height=this.image.height/scale;
+    }
+    update() {
+      this.x += this.speedX;
+    }
+
+    draw(context) {
+      context.fillStyle = "green";
+      context.fillRect(this.x, this.y, this.width, this.height);
+    }
+  }
+
   class Player {
     constructor(game) {
       this.game = game;
@@ -39,6 +64,8 @@ window.addEventListener("load", function () {
       this.height = 100;
       this.speedY = 0;
       this.maxSpeed = 5;
+      this.scale = 1;
+      this.pooBullets = [];
       // this.image=new Image();
       // this.img.src=imgSrc;
       // this.width=this.image.width/scale;
@@ -55,17 +82,32 @@ window.addEventListener("load", function () {
         if (this.y + this.height >= this.game.height) {
           this.y = this.game.height - this.height;
         } else {
-          console.log(this.game.height);
           this.y += this.maxSpeed;
         }
       } else {
         this.y += this.speedY;
       }
+      //Shooting
+      this.pooBullets.forEach((poobullet) => {
+        poobullet.update();
+      });
     }
 
     draw(context) {
       context.fillStyle = "red";
       context.fillRect(this.x, this.y, this.width, this.height);
+      //Shooting
+      this.pooBullets.forEach((poobullet) => {
+        poobullet.draw(context);
+      });
+    }
+
+    shootPoo() {
+      if (this.game.pooBullets > 0) {
+        this.pooBullets.push(new Bullets(this.game));
+        this.game.pooBullets--;
+        console.log(this.game.pooBullets);
+      }
     }
   }
 
@@ -77,10 +119,15 @@ window.addEventListener("load", function () {
       this.height = height;
       this.player = new Player(this);
       this.inputs = new Inputs(this);
+      this.bullets = new Bullets(this);
+      this.pooBullets = 20;
       this.keys = [];
     }
     update() {
       this.player.update();
+      if (this.pooBullets === 0) {
+        console.log("NO POO");
+      }
     }
     draw(context) {
       this.player.draw(context);
@@ -88,7 +135,6 @@ window.addEventListener("load", function () {
   }
 
   const game = new Game(canvas.width, canvas.height);
-  console.log(game);
 
   function startGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
