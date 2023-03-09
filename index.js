@@ -20,6 +20,9 @@ window.addEventListener("load", function () {
         } else if (e.key === " ") {
           this.game.player.shootPoo();
           console.log("Shooting!");
+        } else if (e.key === "r") {
+          this.game.incrementBullets();
+          console.log("Recharge!");
         }
       });
 
@@ -35,8 +38,9 @@ window.addEventListener("load", function () {
     constructor(game) {
       this.game = game;
       this.x = this.game.width;
-      this.speedX = 5;
+      this.speedX = 1;
       this.scale = 1;
+      this.cross = false;
       // this.image=new Image();
       // this.img.src=imgSrc;
       // this.width=this.image.width/scale;
@@ -44,6 +48,9 @@ window.addEventListener("load", function () {
     }
     update() {
       this.x -= this.speedX;
+      if (this.x + this.width < 0) {
+        this.cross = true;
+      }
     }
 
     draw(context) {
@@ -57,6 +64,15 @@ window.addEventListener("load", function () {
       super(game);
       this.width = 30;
       this.height = 60;
+      this.y = Math.floor(Math.random() * this.game.height * 0.9);
+    }
+  }
+
+  class Soap extends Enemy {
+    constructor(game) {
+      super(game);
+      this.width = 60;
+      this.height = 30;
       this.y = Math.floor(
         Math.random() * (this.game.height * 0.9 - this.height)
       );
@@ -152,43 +168,72 @@ window.addEventListener("load", function () {
       this.bullets = new Bullets(this);
       this.pooBullets = 20;
       this.maxBullets = 20;
+      this.maxEnemies = 10;
+      this.enemies = [];
+      this.enemyTimer = 0;
+      this.enemyInterval = 1000;
       this.keys = [];
     }
-    update() {
+    update(delta) {
       this.player.update();
-      if (this.pooBullets === 0) {
-        this.incrementBullets();
-
-        console.log("NO POO");
+      //Enemies
+      this.enemies.forEach((enemy) => {
+        enemy.update();
+      });
+      this.enemies.filter((enemy) => {
+        !enemy.cross;
+      });
+      console.log(this.enemies);
+      if (this.enemyTimer > this.enemyInterval) {
+        this.addEnemies();
+        this.enemyTimer = 0;
+      } else {
+        this.enemyTimer += delta;
       }
-
-      //Find a way to recharge bullets every sec until is full.
-      // if (this.pooBullets < this.maxBullets) {
-      //   setInterval(() => {
-      //     this.pooBullets++;
-      //   }, 1000);
-      // } else {
-      //   clearInterval;
-      // }
+      //Bullets
+      if (this.pooBullets === 0) {
+        //this.incrementBullets();
+        console.log("NO POO,YOU NEED TO EAT");
+      }
     }
     draw(context) {
       this.player.draw(context);
+      this.enemies.forEach((enemy) => {
+        enemy.draw(context);
+      });
     }
+
     incrementBullets() {
       do {
         this.pooBullets++;
       } while (this.pooBullets < this.maxBullets);
       console.log(this.pooBullets);
     }
+
+    addEnemies() {
+      const chooseEnemy = Math.random() * 5;
+      if (chooseEnemy < 3) {
+        this.enemies.push(new Paper(this));
+      } else if (chooseEnemy < 5) {
+        this.enemies.push(new Soap(this));
+      }
+    }
   }
 
   const game = new Game(canvas.width, canvas.height);
 
-  function startGame() {
+  let lastTime = 0;
+  function startGame(time) {
+    const delta = time - lastTime;
+    console.log(delta);
+    lastTime = time;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    game.update();
+
+    game.update(delta);
     game.draw(ctx);
+
     requestAnimationFrame(startGame);
   }
-  startGame();
+
+  startGame(0);
 });
