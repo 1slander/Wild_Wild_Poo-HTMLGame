@@ -324,9 +324,10 @@ window.addEventListener("load", function () {
     }
     endGame(context) {
       if (this.score === this.maxScore) {
-        context.style = "Black";
+        context.fillStyle = "Black";
         context.clearRect(0, 0, canvas.width, canvas.height);
-        context.style = "white";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = "white";
         context.font = "40px  Helvetica";
         context.fillText("YOU WON", this.width / 2, this.height / 2);
         context.fillText(
@@ -335,9 +336,10 @@ window.addEventListener("load", function () {
           this.height / 2 + 50
         );
       } else if (this.playerHp === 0) {
-        context.style = "Black";
+        context.fillStyle = "Black";
         context.clearRect(0, 0, canvas.width, canvas.height);
-        context.style = "white";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = "white";
         context.font = "40px  Helvetica";
         context.fillText("Game Over", this.width / 2, this.height / 2);
         context.fillText(
