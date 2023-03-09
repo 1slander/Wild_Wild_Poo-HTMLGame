@@ -31,13 +31,44 @@ window.addEventListener("load", function () {
     }
   }
   // Classes
+  class Enemy {
+    constructor(game) {
+      this.game = game;
+      this.x = this.game.width;
+      this.speedX = 5;
+      this.scale = 1;
+      // this.image=new Image();
+      // this.img.src=imgSrc;
+      // this.width=this.image.width/scale;
+      // this.height=this.image.height/scale;
+    }
+    update() {
+      this.x -= this.speedX;
+    }
+
+    draw(context) {
+      context.fillStyle = "yellow";
+      context.fillRect(this.x, this.y, this.width, this.height);
+    }
+  }
+
+  class Paper extends Enemy {
+    constructor(game) {
+      super(game);
+      this.width = 30;
+      this.height = 60;
+      this.y = Math.floor(
+        Math.random() * (this.game.height * 0.9 - this.height)
+      );
+    }
+  }
   class Bullets {
     constructor(game) {
       this.game = game;
       this.x = this.game.player.x;
       this.y = this.game.player.y;
-      this.width = 40;
-      this.height = 40;
+      this.width = 20;
+      this.height = 20;
       this.speedX = 5;
       this.scale = 1;
       // this.image=new Image();
@@ -106,7 +137,6 @@ window.addEventListener("load", function () {
       if (this.game.pooBullets > 0) {
         this.pooBullets.push(new Bullets(this.game));
         this.game.pooBullets--;
-        console.log(this.game.pooBullets);
       }
     }
   }
@@ -121,16 +151,34 @@ window.addEventListener("load", function () {
       this.inputs = new Inputs(this);
       this.bullets = new Bullets(this);
       this.pooBullets = 20;
+      this.maxBullets = 20;
       this.keys = [];
     }
     update() {
       this.player.update();
       if (this.pooBullets === 0) {
+        this.incrementBullets();
+
         console.log("NO POO");
       }
+
+      //Find a way to recharge bullets every sec until is full.
+      // if (this.pooBullets < this.maxBullets) {
+      //   setInterval(() => {
+      //     this.pooBullets++;
+      //   }, 1000);
+      // } else {
+      //   clearInterval;
+      // }
     }
     draw(context) {
       this.player.draw(context);
+    }
+    incrementBullets() {
+      do {
+        this.pooBullets++;
+      } while (this.pooBullets < this.maxBullets);
+      console.log(this.pooBullets);
     }
   }
 
