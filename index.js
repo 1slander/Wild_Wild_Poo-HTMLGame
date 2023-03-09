@@ -46,9 +46,18 @@ window.addEventListener("load", function () {
     }
     update() {
       if (this.game.keys.includes("ArrowUp")) {
-        this.y -= this.maxSpeed;
+        if (this.y <= 0) {
+          this.y = 0;
+        } else {
+          this.y -= this.maxSpeed;
+        }
       } else if (this.game.keys.includes("ArrowDown")) {
-        this.y += this.maxSpeed;
+        if (this.y + this.height >= this.game.height) {
+          this.y = this.game.height - this.height;
+        } else {
+          console.log(this.game.height);
+          this.y += this.maxSpeed;
+        }
       } else {
         this.y += this.speedY;
       }
