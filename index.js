@@ -170,6 +170,28 @@ window.addEventListener("load", function () {
       }
     }
   }
+  // UI
+
+  class UI {
+    constructor(game) {
+      this.game = game;
+      this.fontSize = 30;
+      this.fontFamily = "Helvetica";
+      this.color = "white";
+    }
+
+    draw(context) {
+      context.fillStyle = this.color;
+      context.font = `${this.fontSize}px ${this.fontFamily}`;
+      context.fillText(`Score: ${this.game.score}`, 20, 40);
+      context.font = `${this.fontSize - 10}px ${this.fontFamily}`;
+      context.fillText(
+        `Poo: ${this.game.pooBullets} HP: ${this.game.playerHp}`,
+        20,
+        80
+      );
+    }
+  }
 
   //Logic
 
@@ -181,6 +203,7 @@ window.addEventListener("load", function () {
       this.playerHp = 3;
       this.inputs = new Inputs(this);
       this.bullets = new Bullets(this);
+      this.ui = new UI(this);
       this.pooBullets = 20;
       this.maxBullets = 20;
       this.maxEnemies = 10;
@@ -237,14 +260,28 @@ window.addEventListener("load", function () {
     }
     draw(context) {
       this.player.draw(context);
-      this.enemies.forEach((enemy) => {
-        enemy.draw(context);
-      });
+      this.ui.draw(context);
       if (this.pooBullets === 0) {
         context.style = "white";
         context.font = "40px  Helvetica";
-        context.fillText("RECHARGE", this.width / 2, this.height / 2);
+        context.fillText("RECHARGE", 200, 70);
       }
+      this.enemies.forEach((enemy) => {
+        enemy.draw(context);
+      });
+      //GAME OVER LOGIC
+      // // if (this.gameOver === true) {
+      // //   context.style = "Black";
+      // //   context.clearRect(0, 0, canvas.width, canvas.height);
+      // //   context.style = "white";
+      // //   context.font = "40px  Helvetica";
+      // //   context.fillText("Game Over", this.width / 2, this.height / 2);
+      // //   context.fillText(
+      // //     `Score: ${this.score}`,
+      // //     this.width / 2 + 50,
+      // //     this.height / 2 + 50
+      // //   );
+      // }
     }
 
     incrementBullets() {
@@ -270,6 +307,9 @@ window.addEventListener("load", function () {
         obj1.y < obj2.y + obj2.height &&
         obj1.y + obj1.height > obj2.y
       );
+    }
+    gameOver() {
+      cancelAnimationFrame;
     }
   }
 
