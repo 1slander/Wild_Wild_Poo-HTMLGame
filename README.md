@@ -11,5 +11,5 @@ To do:
 
 
 
-![Alt text](/Images/GameBackground.png "Background image design by Lou Leon @designinglou")'
+![Alt text](/Images/GameBackground.png "Background image design by Lou Leon @designinglou")
 
