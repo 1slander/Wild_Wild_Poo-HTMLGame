@@ -9,7 +9,7 @@ To do:
         - Add a start game button
         - Add a restart game button
 
-Background image design by Lou Leon @designinglou
 
-[img]='/Images/GameBackground.png'
+
+![Alt text](/Images/GameBackground.png "Background image design by Lou Leon @designinglou")'
 
