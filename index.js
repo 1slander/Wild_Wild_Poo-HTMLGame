@@ -198,6 +198,33 @@ window.addEventListener("load", function () {
     }
   }
 
+  //Background
+
+  class Background{
+    constructor(game){
+
+      const background = new Image();
+      background.src='Images/GameBackground.png';
+
+      this.game=game;
+      this.image=background;
+      this.width=2300
+      this.height=this.game.height;
+      this.speedX=0.5;
+      this.x=0;
+      this.y=0;
+
+    }
+
+    update(){
+      if(this.x<=-this.width)this.x=0;
+      this.x -= this.speedX;
+    }
+    draw(context){
+      context.drawImage(this.image,this.x,this.y,this.width,this.height)
+    }
+  }
+
   //Logic
 
   class Game {
@@ -208,6 +235,7 @@ window.addEventListener("load", function () {
       this.playerHp = 3;
       this.inputs = new Inputs(this);
       this.bullets = new Bullets(this);
+      this.background=new Background(this);
       this.ui = new UI(this);
       this.pooBullets = 20;
       this.maxBullets = 20;
@@ -221,6 +249,7 @@ window.addEventListener("load", function () {
       this.maxScore = 5;
     }
     update(delta) {
+      this.background.update()
       this.player.update();
 
       //Enemies
@@ -265,6 +294,7 @@ window.addEventListener("load", function () {
       }
     }
     draw(context) {
+      this.background.draw(context);
       this.player.draw(context);
       this.ui.draw(context);
       if (this.pooBullets === 0) {
