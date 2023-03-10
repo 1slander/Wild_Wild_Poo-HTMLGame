@@ -14,3 +14,7 @@
   max-height: 100%;
   background: lightblue;
 }
+
+#paper,#soap,#player{
+  display: none;
+}

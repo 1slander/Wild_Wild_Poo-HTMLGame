@@ -4,7 +4,7 @@ window.addEventListener("load", function () {
 
   canvas.width = 500;
   canvas.height = 700;
-  const scale = 6;
+  
 
   //Inputs
   class Inputs {
@@ -50,56 +50,58 @@ window.addEventListener("load", function () {
     }
 
     draw(context) {
-      context.fillStyle = "yellow";
-      context.fillRect(this.x, this.y, this.width, this.height);
+      context.strokeStyle = "yellow";
+      context.strokeRect(this.x, this.y, this.width, this.height);
+      context.drawImage(this.image,this.x,this.y,this.width,this.height);
     }
   }
 
   class Paper extends Enemy {
     constructor(game) {
       super(game);
-      this.width = 30;
-      this.height = 60;
+      const paper=new Image();
+      paper.src='Images/paper.png'
+      this.width = 70;
+      this.height = 80;
       this.enemyHp = 1;
       this.score = this.enemyHp;
       this.y = Math.floor(Math.random() * this.game.height * 0.9);
-      // this.image=new Image();
-      // this.img.src=imgSrc;
-      // this.width=this.image.width/scale;
-      // this.height=this.image.height/scale;
+      this.image=paper;
+      
     }
   }
 
   class Soap extends Enemy {
     constructor(game) {
       super(game);
-      this.width = 60;
-      this.height = 30;
+      const soap = new Image();
+      soap.src='Images/soap.png'
+      this.width = 80;
+      this.height = 70;
       this.enemyHp = 3;
       this.score = this.enemyHp;
       this.y = Math.floor(
         Math.random() * (this.game.height * 0.9 - this.height)
       );
-      // this.image=new Image();
-      // this.img.src=imgSrc;
-      // this.width=this.image.width/scale;
-      // this.height=this.image.height/scale;
+      this.image=soap;
     }
   }
   class Bullets {
     constructor(game) {
+
+      const pooBullet=new Image();
+      pooBullet.src='Images/splat.png'
+
       this.game = game;
-      this.x = this.game.player.x;
-      this.y = this.game.player.y;
-      this.width = 20;
-      this.height = 20;
+      this.x = this.game.player.x+65 ;
+      this.y = this.game.player.y+35;
+      this.width = 50;
+      this.height = 50;
       this.speedX = 5;
       this.scale = 1;
       this.delete = false;
-      // this.image=new Image();
-      // this.img.src=imgSrc;
-      // this.width=this.image.width/scale;
-      // this.height=this.image.height/scale;
+      this.image=pooBullet;
+      
     }
     update() {
       this.x += this.speedX;
@@ -107,27 +109,29 @@ window.addEventListener("load", function () {
     }
 
     draw(context) {
-      context.fillStyle = "green";
-      context.fillRect(this.x, this.y, this.width, this.height);
+      context.strokeStyle = "green";
+      context.strokeRect(this.x, this.y, this.width, this.height);
+      context.drawImage(this.image,this.x,this.y,this.width,this.height)
     }
   }
 
   class Player {
     constructor(game) {
+      
+      const playerImg = new Image();
+      playerImg.src='./Images/player.png';
+
       this.game = game;
-      this.x = 10;
-      this.y = canvas.height / 2;
-      this.width = 120;
-      this.height = 100;
+      this.x = 5;
+      this.y = (this.game.height/2);
+      this.width = 150;
+      this.height = 125;
       this.speedY = 0;
       this.maxSpeed = 5;
       this.scale = 1;
       this.pooBullets = [];
-
-      // this.image=new Image();
-      // this.img.src=imgSrc;
-      // this.width=this.image.width/scale;
-      // this.height=this.image.height/scale;
+      this.playerImg=playerImg;
+      
     }
     update() {
       if (this.game.keys.includes("ArrowUp")) {
@@ -155,8 +159,9 @@ window.addEventListener("load", function () {
     }
 
     draw(context) {
-      context.fillStyle = "red";
-      context.fillRect(this.x, this.y, this.width, this.height);
+    context.strokeStyle = "red";
+    context.strokeRect(this.x, this.y, this.width-30, this.height);
+      context.drawImage(this.playerImg,this.x,this.y,this.width,this.height);
       //Shooting
       this.pooBullets.forEach((poobullet) => {
         poobullet.draw(context);
@@ -271,31 +276,6 @@ window.addEventListener("load", function () {
         enemy.draw(context);
       });
 
-      //GAME OVER LOGIC
-      // if (this.score === this.maxScore && this.gameOver === true) {
-      //   context.style = "Black";
-      //   context.clearRect(0, 0, canvas.width, canvas.height);
-      //   context.style = "white";
-      //   context.font = "40px  Helvetica";
-      //   context.fillText("YOU WON", this.width / 2, this.height / 2);
-      //   context.fillText(
-      //     `Score: ${this.score}`,
-      //     this.width / 2 + 50,
-      //     this.height / 2 + 50
-      //   );
-      // }
-      // if (this.gameOver === true && this.playerHp === 0) {
-      //   context.style = "Black";
-      //   context.clearRect(0, 0, canvas.width, canvas.height);
-      //   context.style = "white";
-      //   context.font = "40px  Helvetica";
-      //   context.fillText("Game Over", this.width / 2, this.height / 2);
-      //   context.fillText(
-      //     `Score: ${this.score}`,
-      //     this.width / 2 + 50,
-      //     this.height / 2 + 50
-      //   );
-      // }
     }
 
     incrementBullets() {
