@@ -2,8 +2,10 @@ window.addEventListener("load", function () {
   const canvas = document.getElementById("board");
   const ctx = canvas.getContext("2d");
 
-  canvas.width = 500;
-  canvas.height = 700;
+  canvas.width = 700;
+  canvas.height = 500;
+
+  //Resample image W120 H108
 
   //Inputs
   class Inputs {
@@ -123,11 +125,11 @@ window.addEventListener("load", function () {
       this.height = 100;
       this.speedY = 0;
       this.maxSpeed = 5;
-      this.scale = 6;
+      this.scale = 0.6;
       this.pooBullets = [];
       this.playerImg = playerImg;
-      this.playerW = playerImg.width / this.scale;
-      this.playerH = playerImg.height / this.scale;
+      this.playerW = playerImg.width * this.scale;
+      this.playerH = playerImg.height * this.scale;
     }
     update() {
       if (this.game.keys.includes("ArrowUp")) {
@@ -272,7 +274,7 @@ window.addEventListener("load", function () {
             if (enemy.enemyHp === 0) {
               enemy.dead = true;
               this.score += enemy.score;
-              if (this.score === this.maxScore) this.gameOver = true;
+              if (this.score >= this.maxScore) this.gameOver = true;
               console.log(this.score);
             }
           }
@@ -333,7 +335,7 @@ window.addEventListener("load", function () {
       );
     }
     endGame(context) {
-      if (this.score === this.maxScore) {
+      if (this.score >= this.maxScore) {
         context.fillStyle = "Black";
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.fillRect(0, 0, canvas.width, canvas.height);
@@ -352,7 +354,7 @@ window.addEventListener("load", function () {
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.fillStyle = "white";
         context.font = `50px  ${this.fontFamily}`;
-        context.fillText("Game Over", this.width / 2 - 100, this.height / 2);
+        context.fillText("Game Over", this.width / 2 - 150, this.height / 2);
         context.font = `30px  ${this.fontFamily}`;
         context.fillText(
           `Score: ${this.score}`,
