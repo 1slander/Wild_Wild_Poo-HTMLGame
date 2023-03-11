@@ -135,6 +135,9 @@ window.addEventListener("load", function () {
       const playerImg = new Image();
       playerImg.src = "./Images/player_rb.png";
 
+      const shootAudio = new Audio();
+      shootAudio.src = "./Sounds/fart.mp3";
+
       this.game = game;
       this.x = 5;
       this.y = this.game.height / 2;
@@ -147,6 +150,7 @@ window.addEventListener("load", function () {
       this.playerImg = playerImg;
       this.playerW = playerImg.width * this.scale;
       this.playerH = playerImg.height * this.scale;
+      this.bulletSound = shootAudio;
     }
     update() {
       if (this.game.keys.includes("ArrowUp")) {
@@ -192,6 +196,7 @@ window.addEventListener("load", function () {
     shootPoo() {
       if (this.game.pooBullets > 0) {
         this.pooBullets.push(new Bullets(this.game));
+        this.bulletSound.play();
         this.game.pooBullets--;
       }
     }
