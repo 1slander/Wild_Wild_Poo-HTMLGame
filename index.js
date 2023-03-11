@@ -112,11 +112,31 @@ window.addEventListener("load", function () {
       context.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
   }
+  class HP {
+    constructor(game, x) {
+      const hp = new Image();
+      hp.src = "Images/lives.png";
+
+      this.game = game;
+      this.x = x;
+      this.y = 50;
+      this.width = 30;
+      this.height = 30;
+      this.speedX = 5;
+      this.delete = false;
+      this.image = hp;
+    }
+    update() {}
+
+    draw(context) {
+      context.drawImage(this.image, this.x, this.y, this.width, this.height);
+    }
+  }
 
   class Player {
     constructor(game) {
       const playerImg = new Image();
-      playerImg.src = "./Images/player2.png";
+      playerImg.src = "./Images/player_rb.png";
 
       this.game = game;
       this.x = 5;
@@ -163,8 +183,8 @@ window.addEventListener("load", function () {
         this.playerImg,
         this.x,
         this.y,
-        this.playerW,
-        this.playerH
+        this.width,
+        this.height
       );
       //Shooting
       this.pooBullets.forEach((poobullet) => {
@@ -194,11 +214,7 @@ window.addEventListener("load", function () {
       context.font = `${this.fontSize}px ${this.fontFamily}`;
       context.fillText(`S c o r e :  ${this.game.score}`, 20, 40);
       context.font = `${this.fontSize - 10}px ${this.fontFamily}`;
-      context.fillText(
-        `Poo:  ${this.game.pooBullets}   HP:  ${this.game.playerHp}`,
-        20,
-        70
-      );
+      context.fillText(`Poo:  ${this.game.pooBullets}   HP: `, 20, 70);
     }
   }
 
@@ -235,6 +251,7 @@ window.addEventListener("load", function () {
       this.height = height;
       this.player = new Player(this);
       this.playerHp = 3;
+      this.hp = [];
       this.inputs = new Inputs(this);
       this.bullets = new Bullets(this);
       this.background = new Background(this);
@@ -262,6 +279,7 @@ window.addEventListener("load", function () {
         if (this.checkCollision(this.player, enemy)) {
           enemy.dead = true;
           this.playerHp--;
+          this.hp.pop();
           if (this.playerHp === 0) {
             this.gameOver = true;
             console.log("YOU LOST");
@@ -295,6 +313,10 @@ window.addEventListener("load", function () {
         //this.incrementBullets();
         console.log("NO POO,YOU NEED TO EAT");
       }
+      //HP
+      if (this.playerHp > 0) {
+        this.addHP();
+      }
     }
     draw(context) {
       this.background.draw(context);
@@ -308,6 +330,17 @@ window.addEventListener("load", function () {
       this.enemies.forEach((enemy) => {
         enemy.draw(context);
       });
+      this.hp.forEach((hp) => {
+        hp.draw(context);
+      });
+    }
+
+    addHP() {
+      if (this.hp.length < this.playerHp) {
+        this.hp.push(new HP(this, 150));
+        this.hp.push(new HP(this, 190));
+        this.hp.push(new HP(this, 230));
+      }
     }
 
     incrementBullets() {
