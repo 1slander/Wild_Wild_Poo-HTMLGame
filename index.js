@@ -37,11 +37,15 @@ window.addEventListener("load", function () {
   // Classes
   class Enemy {
     constructor(game) {
+      const kill = new Audio();
+      kill.src = "./Sounds/Kill.mp3";
+
       this.game = game;
       this.x = this.game.width;
       this.speedX = 1;
       this.scale = 1;
       this.dead = false;
+      this.sound = kill;
     }
     update() {
       this.x -= this.speedX;
@@ -54,6 +58,13 @@ window.addEventListener("load", function () {
       context.strokeStyle = "yellow";
       context.strokeRect(this.x, this.y, this.width, this.height);
       context.drawImage(this.image, this.x, this.y, this.width, this.height);
+    }
+    playSound() {
+      if (this.game.gameOver) {
+        this.sound.pause();
+      } else {
+        this.sound.play();
+      }
     }
   }
 
@@ -306,6 +317,7 @@ window.addEventListener("load", function () {
         this.player.pooBullets.forEach((bullet) => {
           if (this.checkCollision(bullet, enemy)) {
             enemy.enemyHp--;
+            enemy.playSound();
             bullet.delete = true;
             if (enemy.enemyHp === 0) {
               enemy.dead = true;
