@@ -122,11 +122,8 @@ window.addEventListener("load", function () {
       this.y = 50;
       this.width = 30;
       this.height = 30;
-      this.speedX = 5;
-      this.delete = false;
       this.image = hp;
     }
-    update() {}
 
     draw(context) {
       context.drawImage(this.image, this.x, this.y, this.width, this.height);
