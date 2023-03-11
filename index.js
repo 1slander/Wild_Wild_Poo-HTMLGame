@@ -138,6 +138,12 @@ window.addEventListener("load", function () {
       const shootAudio = new Audio();
       shootAudio.src = "./Sounds/fart.mp3";
 
+      const shootAudio2 = new Audio();
+      shootAudio2.src = "./Sounds/fart2.wav";
+
+      const shootAudio3 = new Audio();
+      shootAudio2.src = "./Sounds/fart3.wav";
+
       this.game = game;
       this.x = 5;
       this.y = this.game.height / 2;
@@ -150,7 +156,7 @@ window.addEventListener("load", function () {
       this.playerImg = playerImg;
       this.playerW = playerImg.width * this.scale;
       this.playerH = playerImg.height * this.scale;
-      this.bulletSound = shootAudio;
+      this.bulletSound = [shootAudio, shootAudio2, shootAudio3];
     }
     update() {
       if (this.game.keys.includes("ArrowUp")) {
@@ -193,10 +199,20 @@ window.addEventListener("load", function () {
       });
     }
 
+    randomSound() {
+      if (this.game.gameOver) {
+        this.bulletSound[random].pause();
+      } else {
+        let random = Math.floor(Math.random() * 2);
+        console.log(random);
+        this.bulletSound[random].play();
+      }
+    }
+
     shootPoo() {
       if (this.game.pooBullets > 0) {
         this.pooBullets.push(new Bullets(this.game));
-        this.bulletSound.play();
+        this.randomSound();
         this.game.pooBullets--;
       }
     }
