@@ -155,6 +155,9 @@ window.addEventListener("load", function () {
       const shootAudio3 = new Audio();
       shootAudio2.src = "./Sounds/fart3.wav";
 
+      const reload = new Audio();
+      reload.src = "./Sounds/Need more shit 2.wav";
+
       this.game = game;
       this.x = 5;
       this.y = this.game.height / 2;
@@ -168,6 +171,7 @@ window.addEventListener("load", function () {
       this.playerW = playerImg.width * this.scale;
       this.playerH = playerImg.height * this.scale;
       this.bulletSound = [shootAudio, shootAudio2, shootAudio3];
+      this.reload = reload;
     }
     update() {
       if (this.game.keys.includes("ArrowUp")) {
@@ -217,6 +221,14 @@ window.addEventListener("load", function () {
         let random = Math.floor(Math.random() * 2);
         console.log(random);
         this.bulletSound[random].play();
+      }
+    }
+
+    reloadSound() {
+      if (this.game.gameOver) {
+        this.reload.pause();
+      } else {
+        this.reload.play();
       }
     }
 
@@ -340,7 +352,7 @@ window.addEventListener("load", function () {
 
       //Bullets
       if (this.pooBullets === 0) {
-        //this.incrementBullets();
+        this.player.reloadSound();
         console.log("NO POO,YOU NEED TO EAT");
       }
       //HP
@@ -355,7 +367,7 @@ window.addEventListener("load", function () {
       if (this.pooBullets === 0) {
         context.style = "white";
         context.font = `40px  ${this.fontFamily}`;
-        context.fillText("RECHARGE", 200, 70);
+        context.fillText("RECHARGE", 500, 70);
       }
       this.enemies.forEach((enemy) => {
         enemy.draw(context);
