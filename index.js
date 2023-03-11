@@ -116,16 +116,16 @@ window.addEventListener("load", function () {
   class Player {
     constructor(game) {
       const playerImg = new Image();
-      playerImg.src = "./Images/player.png";
+      playerImg.src = "./Images/player2.png";
 
       this.game = game;
       this.x = 5;
       this.y = this.game.height / 2;
-      this.width = 80;
-      this.height = 100;
+      this.width = 120;
+      this.height = 108;
       this.speedY = 0;
       this.maxSpeed = 5;
-      this.scale = 0.6;
+      this.scale = 1;
       this.pooBullets = [];
       this.playerImg = playerImg;
       this.playerW = playerImg.width * this.scale;
@@ -163,8 +163,8 @@ window.addEventListener("load", function () {
         this.playerImg,
         this.x,
         this.y,
-        this.width - 20 + 40,
-        this.height - 10 + 10
+        this.playerW,
+        this.playerH
       );
       //Shooting
       this.pooBullets.forEach((poobullet) => {
