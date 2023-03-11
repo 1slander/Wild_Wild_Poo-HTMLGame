@@ -72,7 +72,7 @@ window.addEventListener("load", function () {
     constructor(game) {
       super(game);
       const paper = new Image();
-      paper.src = "Images/paper.png";
+      paper.src = "Images/paper_resize.png";
       this.width = 70;
       this.height = 80;
       this.enemyHp = 1;
@@ -86,7 +86,7 @@ window.addEventListener("load", function () {
     constructor(game) {
       super(game);
       const soap = new Image();
-      soap.src = "Images/soap.png";
+      soap.src = "Images/soap_resize.png";
       this.width = 80;
       this.height = 70;
       this.enemyHp = 3;
@@ -144,7 +144,7 @@ window.addEventListener("load", function () {
   class Player {
     constructor(game) {
       const playerImg = new Image();
-      playerImg.src = "./Images/player_rb.png";
+      playerImg.src = "./Images/player_resize.png";
 
       const shootAudio = new Audio();
       shootAudio.src = "./Sounds/fart.mp3";
@@ -161,8 +161,8 @@ window.addEventListener("load", function () {
       this.game = game;
       this.x = 5;
       this.y = this.game.height / 2;
-      this.width = 120;
-      this.height = 108;
+      this.width = 50;
+      this.height = 100;
       this.speedY = 0;
       this.maxSpeed = 5;
       this.scale = 1;
