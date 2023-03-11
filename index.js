@@ -4,7 +4,6 @@ window.addEventListener("load", function () {
 
   canvas.width = 500;
   canvas.height = 700;
-  
 
   //Inputs
   class Inputs {
@@ -52,22 +51,21 @@ window.addEventListener("load", function () {
     draw(context) {
       context.strokeStyle = "yellow";
       context.strokeRect(this.x, this.y, this.width, this.height);
-      context.drawImage(this.image,this.x,this.y,this.width,this.height);
+      context.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
   }
 
   class Paper extends Enemy {
     constructor(game) {
       super(game);
-      const paper=new Image();
-      paper.src='Images/paper.png'
+      const paper = new Image();
+      paper.src = "Images/paper.png";
       this.width = 70;
       this.height = 80;
       this.enemyHp = 1;
       this.score = this.enemyHp;
       this.y = Math.floor(Math.random() * this.game.height * 0.9);
-      this.image=paper;
-      
+      this.image = paper;
     }
   }
 
@@ -75,7 +73,7 @@ window.addEventListener("load", function () {
     constructor(game) {
       super(game);
       const soap = new Image();
-      soap.src='Images/soap.png'
+      soap.src = "Images/soap.png";
       this.width = 80;
       this.height = 70;
       this.enemyHp = 3;
@@ -83,25 +81,23 @@ window.addEventListener("load", function () {
       this.y = Math.floor(
         Math.random() * (this.game.height * 0.9 - this.height)
       );
-      this.image=soap;
+      this.image = soap;
     }
   }
   class Bullets {
     constructor(game) {
-
-      const pooBullet=new Image();
-      pooBullet.src='Images/splat.png'
+      const pooBullet = new Image();
+      pooBullet.src = "Images/splat.png";
 
       this.game = game;
-      this.x = this.game.player.x+65 ;
-      this.y = this.game.player.y+35;
+      this.x = this.game.player.x + 65;
+      this.y = this.game.player.y + 35;
       this.width = 50;
       this.height = 50;
       this.speedX = 5;
       this.scale = 1;
       this.delete = false;
-      this.image=pooBullet;
-      
+      this.image = pooBullet;
     }
     update() {
       this.x += this.speedX;
@@ -111,27 +107,27 @@ window.addEventListener("load", function () {
     draw(context) {
       context.strokeStyle = "green";
       context.strokeRect(this.x, this.y, this.width, this.height);
-      context.drawImage(this.image,this.x,this.y,this.width,this.height)
+      context.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
   }
 
   class Player {
     constructor(game) {
-      
       const playerImg = new Image();
-      playerImg.src='./Images/player.png';
+      playerImg.src = "./Images/player.png";
 
       this.game = game;
       this.x = 5;
-      this.y = (this.game.height/2);
-      this.width = 150;
-      this.height = 125;
+      this.y = this.game.height / 2;
+      this.width = 80;
+      this.height = 100;
       this.speedY = 0;
       this.maxSpeed = 5;
-      this.scale = 1;
+      this.scale = 6;
       this.pooBullets = [];
-      this.playerImg=playerImg;
-      
+      this.playerImg = playerImg;
+      this.playerW = playerImg.width / this.scale;
+      this.playerH = playerImg.height / this.scale;
     }
     update() {
       if (this.game.keys.includes("ArrowUp")) {
@@ -159,9 +155,15 @@ window.addEventListener("load", function () {
     }
 
     draw(context) {
-    context.strokeStyle = "red";
-    context.strokeRect(this.x, this.y, this.width-30, this.height);
-      context.drawImage(this.playerImg,this.x,this.y,this.width,this.height);
+      context.strokeStyle = "red";
+      context.strokeRect(this.x, this.y, this.width, this.height);
+      context.drawImage(
+        this.playerImg,
+        this.x,
+        this.y,
+        this.width - 20 + 40,
+        this.height - 10 + 10
+      );
       //Shooting
       this.pooBullets.forEach((poobullet) => {
         poobullet.draw(context);
@@ -181,47 +183,45 @@ window.addEventListener("load", function () {
     constructor(game) {
       this.game = game;
       this.fontSize = 30;
-      this.fontFamily = "Helvetica";
+      this.fontFamily = "Luckiest Guy";
       this.color = "white";
     }
 
     draw(context) {
       context.fillStyle = this.color;
       context.font = `${this.fontSize}px ${this.fontFamily}`;
-      context.fillText(`Score: ${this.game.score}`, 20, 40);
+      context.fillText(`S c o r e :  ${this.game.score}`, 20, 40);
       context.font = `${this.fontSize - 10}px ${this.fontFamily}`;
       context.fillText(
-        `Poo: ${this.game.pooBullets} HP: ${this.game.playerHp}`,
+        `Poo:  ${this.game.pooBullets}   HP:  ${this.game.playerHp}`,
         20,
-        80
+        70
       );
     }
   }
 
   //Background
 
-  class Background{
-    constructor(game){
-
+  class Background {
+    constructor(game) {
       const background = new Image();
-      background.src='Images/GameBackground.png';
+      background.src = "Images/GameBackground.png";
 
-      this.game=game;
-      this.image=background;
-      this.width=2300
-      this.height=this.game.height;
-      this.speedX=0.5;
-      this.x=0;
-      this.y=0;
-
+      this.game = game;
+      this.image = background;
+      this.width = 2300;
+      this.height = this.game.height;
+      this.speedX = 0.5;
+      this.x = 0;
+      this.y = 0;
     }
 
-    update(){
-      if(this.x<=-this.width)this.x=0;
+    update() {
+      if (this.x <= -this.width) this.x = 0;
       this.x -= this.speedX;
     }
-    draw(context){
-      context.drawImage(this.image,this.x,this.y,this.width,this.height)
+    draw(context) {
+      context.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
   }
 
@@ -235,7 +235,7 @@ window.addEventListener("load", function () {
       this.playerHp = 3;
       this.inputs = new Inputs(this);
       this.bullets = new Bullets(this);
-      this.background=new Background(this);
+      this.background = new Background(this);
       this.ui = new UI(this);
       this.pooBullets = 20;
       this.maxBullets = 20;
@@ -247,9 +247,10 @@ window.addEventListener("load", function () {
       this.gameOver == false;
       this.score = 0;
       this.maxScore = 5;
+      this.fontFamily = "Luckiest Guy";
     }
     update(delta) {
-      this.background.update()
+      this.background.update();
       this.player.update();
 
       //Enemies
@@ -299,13 +300,12 @@ window.addEventListener("load", function () {
       this.ui.draw(context);
       if (this.pooBullets === 0) {
         context.style = "white";
-        context.font = "40px  Helvetica";
+        context.font = `40px  ${this.fontFamily}`;
         context.fillText("RECHARGE", 200, 70);
       }
       this.enemies.forEach((enemy) => {
         enemy.draw(context);
       });
-
     }
 
     incrementBullets() {
@@ -338,11 +338,12 @@ window.addEventListener("load", function () {
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.fillStyle = "white";
-        context.font = "40px  Helvetica";
-        context.fillText("YOU WON", this.width / 2, this.height / 2);
+        context.font = `50px  ${this.fontFamily}`;
+        context.fillText("YOU WON", this.width / 2 - 100, this.height / 2);
+        context.font = `30px  ${this.fontFamily}`;
         context.fillText(
           `Score: ${this.score}`,
-          this.width / 2 + 50,
+          this.width / 2 - 70,
           this.height / 2 + 50
         );
       } else if (this.playerHp === 0) {
@@ -350,11 +351,12 @@ window.addEventListener("load", function () {
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.fillStyle = "white";
-        context.font = "40px  Helvetica";
-        context.fillText("Game Over", this.width / 2, this.height / 2);
+        context.font = `50px  ${this.fontFamily}`;
+        context.fillText("Game Over", this.width / 2 - 100, this.height / 2);
+        context.font = `30px  ${this.fontFamily}`;
         context.fillText(
           `Score: ${this.score}`,
-          this.width / 2 + 50,
+          this.width / 2 - 70,
           this.height / 2 + 50
         );
       }
