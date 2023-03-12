@@ -1,5 +1,7 @@
 # Game Project: Wild Wild Poo
 
+![Alt text](/Images/GameTitle.png "")
+
 To do:
 
 - Fixed Game Over Screen
