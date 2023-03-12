@@ -8,6 +8,8 @@ body{
   max-width: 100%;
   max-height: 100%;
   font-family: Luckiest Guy;
+  background-color: #d13896;
+  overflow:;
 }
 
 header{
@@ -15,6 +17,7 @@ header{
   text-align: center;
   font-family: Luckiest Guy;
   font-size: 2.5rem;
+  color: white;
   
 }
 
@@ -23,6 +26,7 @@ header{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  
 }
 .instructions{
   display: flex;
@@ -32,9 +36,15 @@ header{
   align-items: center;
   
 }
+
+.instructions strong {
+  color: white ;
+}
 ul > li{
   padding: 5px;
   font-size: 1.25rem;
+  color: #6a1c6b;
+  
   
 }
 
@@ -64,10 +74,14 @@ button{
   font-family: Luckiest Guy;
   font-size: 1.5rem;
   text-align: center;
+  background-color: #6a1c6b;
+  border: none;
+  color: white;
+
 }
 
 button:hover{
-  background-color: black;
+  background-color: #470b54 ;
   color: white;
 }
 

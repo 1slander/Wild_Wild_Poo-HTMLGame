@@ -414,7 +414,7 @@ window.addEventListener("load", function () {
     }
     endGame(context) {
       if (this.score >= this.maxScore) {
-        context.fillStyle = "Black";
+        context.fillStyle = "#470b54";
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.fillStyle = "white";
@@ -427,7 +427,7 @@ window.addEventListener("load", function () {
           this.height / 2 + 50
         );
       } else if (this.playerHp === 0) {
-        context.fillStyle = "Black";
+        context.fillStyle = "#470b54";
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.fillStyle = "white";
@@ -456,6 +456,7 @@ window.addEventListener("load", function () {
     game.draw(ctx);
     if (game.gameOver) {
       game.endGame(ctx);
+      document.body.style.overflow='visible'
       restartBtn.style.display='block';
       cancelAnimationFrame;
     } else {
@@ -467,6 +468,7 @@ window.addEventListener("load", function () {
     canvas.style.display='block';
     instructions.style.display='none';
     startBtn.style.display='none';
+    document.body.style.overflow='hidden'
     startGame(0);
   })
 
@@ -474,6 +476,7 @@ window.addEventListener("load", function () {
     game.gameOver=false;
     game.score=0;
     game.pooBullets=20;
+    document.body.style.overflow='hidden'
     restartBtn.style.display='none';
     startGame(0);
     
