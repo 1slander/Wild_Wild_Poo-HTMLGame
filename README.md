@@ -2,10 +2,10 @@
 
 ![Alt text](/Images/GameTitle.png "")
 
+About:
+
 To do:
 
-- Fixed Game Over Screen
-- Add Sounds
 - Work on the html to create:
         - Instructions of how to play
         - Add a start game button

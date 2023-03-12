@@ -3,15 +3,72 @@
   padding: 0;
   box-sizing: border-box;
 }
+body{
+  font-size: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  font-family: Luckiest Guy;
+}
+
+header{
+  margin: 40px;
+  text-align: center;
+  font-family: Luckiest Guy;
+  font-size: 2.5rem;
+  
+}
+
+#content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.instructions{
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  
+}
+ul > li{
+  padding: 5px;
+}
+
+
 
 #board {
   border: 5px solid black;
-  position: absolute;
+  align-self: center;
+  /* position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  left: 50%; */
+  /* transform: translate(-50%, -50%); */
   max-width: 100%;
   max-height: 100%;
   background: lightblue;
+}
+
+#button_menu{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+margin: 15px;
+
+}
+
+button{
+  padding: 10px;
+  border-radius: 5px;
+  font-family: Luckiest Guy;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+button:hover{
+  background-color: black;
+  color: white;
 }
 
