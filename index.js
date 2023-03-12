@@ -1,7 +1,10 @@
 window.addEventListener("load", function () {
   const canvas = document.getElementById("board");
   const ctx = canvas.getContext("2d");
-
+  const startBtn=document.getElementById('startGame');
+  const restartBtn=document.getElementById('restart');
+  const instructions=document.querySelector('.instructions');
+  
   canvas.width = 700;
   canvas.height = 500;
 
@@ -453,11 +456,28 @@ window.addEventListener("load", function () {
     game.draw(ctx);
     if (game.gameOver) {
       game.endGame(ctx);
+      restartBtn.style.display='block';
       cancelAnimationFrame;
     } else {
       requestAnimationFrame(startGame);
     }
   }
+  startBtn.addEventListener('click',()=>{
+    
+    canvas.style.display='block';
+    instructions.style.display='none';
+    startBtn.style.display='none';
+    startGame(0);
+  })
 
-  startGame(0);
+  restartBtn.addEventListener('click',()=>{
+    game.gameOver=false;
+    game.score=0;
+    game.pooBullets=20;
+    restartBtn.style.display='none';
+    startGame(0);
+    
+  })
+  
+
 });
