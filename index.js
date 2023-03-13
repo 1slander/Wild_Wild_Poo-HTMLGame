@@ -5,10 +5,25 @@ window.addEventListener("load", function () {
   const restartBtn=document.getElementById('restart');
   const instructions=document.querySelector('.instructions');
   
-  canvas.width = 700;
-  canvas.height = 500;
-
-  //Resample image W120 H108
+  
+  //JS Media Query
+  
+  const largeScreen = window.matchMedia('(min-width:1440px');
+  const smallScreen=window.matchMedia('(max-width:768px)');
+  
+  if(largeScreen.matches){
+    canvas.width=900;
+    canvas.height=700;
+    console.log('large screen');
+  } else if( smallScreen.matches){
+    canvas.width=500;
+    canvas.height=500;
+    console.log('small screen');
+  }else{
+    canvas.width = 700;
+    canvas.height = 500;
+    console.log('medium screen')
+  }
 
   //Inputs
   class Inputs {
