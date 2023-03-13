@@ -477,6 +477,7 @@ window.addEventListener("load", function () {
     game.score=0;
     game.pooBullets=20;
     game.enemies=[];
+    game.playerHp=3;
     document.body.style.overflow='hidden'
     restartBtn.style.display='none';
     startGame(0);

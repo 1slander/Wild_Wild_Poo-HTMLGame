@@ -8,7 +8,8 @@ The world have become a very clean place after Covid, but after a few years of f
 
 ## To do:
 
-- Work on the html to create: - Fix restart animation after clicking restart button - Responsive design?
+
+- Responsive design?
 
 Background image design by Lou Leon @designinglou
 
