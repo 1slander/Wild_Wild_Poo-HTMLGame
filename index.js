@@ -13,15 +13,12 @@ window.addEventListener("load", function () {
   if (largeScreen.matches) {
     canvas.width = 900;
     canvas.height = 700;
-    console.log("large screen");
   } else if (smallScreen.matches) {
     canvas.width = 500;
     canvas.height = 500;
-    console.log("small screen");
   } else {
     canvas.width = 700;
     canvas.height = 500;
-    console.log("medium screen");
   }
 
   //Inputs
@@ -37,10 +34,8 @@ window.addEventListener("load", function () {
           this.game.keys.push(e.key);
         } else if (e.key === " ") {
           this.game.player.shootPoo();
-          console.log("Shooting!");
         } else if (e.key === "r") {
           this.game.incrementBullets();
-          console.log("Recharge!");
         }
       });
 
@@ -240,7 +235,7 @@ window.addEventListener("load", function () {
         this.bulletSound[random].pause();
       } else {
         let random = Math.floor(Math.random() * 2);
-        console.log(random);
+
         this.bulletSound[random].play();
       }
     }
@@ -337,7 +332,7 @@ window.addEventListener("load", function () {
       //Enemies
       this.enemies.forEach((enemy) => {
         enemy.update();
-
+        //Collision
         if (this.checkCollision(this.player, enemy)) {
           enemy.dead = true;
           this.player.damage.play();
@@ -345,7 +340,6 @@ window.addEventListener("load", function () {
           this.hp.pop();
           if (this.playerHp === 0) {
             this.gameOver = true;
-            console.log("YOU LOST");
           }
         }
         this.player.pooBullets.forEach((bullet) => {
@@ -357,7 +351,6 @@ window.addEventListener("load", function () {
               enemy.dead = true;
               this.score += enemy.score;
               if (this.score >= this.maxScore) this.gameOver = true;
-              console.log(this.score);
             }
           }
         });
@@ -375,7 +368,6 @@ window.addEventListener("load", function () {
       //Bullets
       if (this.pooBullets === 0) {
         this.player.reloadSound();
-        console.log("NO POO,YOU NEED TO EAT");
       }
       //HP
       if (this.playerHp > 0) {
@@ -411,7 +403,6 @@ window.addEventListener("load", function () {
       do {
         this.pooBullets++;
       } while (this.pooBullets < this.maxBullets);
-      console.log(this.pooBullets);
     }
 
     addEnemies() {
