@@ -67,8 +67,8 @@ window.addEventListener("load", function () {
     }
 
     draw(context) {
-      context.strokeStyle = "yellow";
-      context.strokeRect(this.x, this.y, this.width, this.height);
+      //context.strokeStyle = "yellow";
+      //context.strokeRect(this.x, this.y, this.width, this.height);
       context.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
     playSound() {
@@ -130,8 +130,8 @@ window.addEventListener("load", function () {
     }
 
     draw(context) {
-      context.strokeStyle = "green";
-      context.strokeRect(this.x, this.y, this.width, this.height);
+      //context.strokeStyle = "green";
+      //context.strokeRect(this.x, this.y, this.width, this.height);
       context.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
   }
@@ -215,8 +215,8 @@ window.addEventListener("load", function () {
     }
 
     draw(context) {
-      context.strokeStyle = "red";
-      context.strokeRect(this.x, this.y, this.width, this.height);
+      //context.strokeStyle = "red";
+      //context.strokeRect(this.x, this.y, this.width, this.height);
       context.drawImage(
         this.playerImg,
         this.x,
