@@ -304,6 +304,9 @@ window.addEventListener("load", function () {
 
   class Game {
     constructor(width, height) {
+      const flush = new Audio();
+      flush.src = "/Sounds/Flush.mp3";
+
       this.width = width;
       this.height = height;
       this.player = new Player(this);
@@ -324,6 +327,8 @@ window.addEventListener("load", function () {
       this.score = 0;
       this.maxScore = 5;
       this.fontFamily = "Luckiest Guy";
+
+      this.flushSound = flush;
     }
     update(delta) {
       this.background.update();
@@ -437,6 +442,7 @@ window.addEventListener("load", function () {
           this.height / 2 + 50
         );
       } else if (this.playerHp === 0) {
+        this.flushSound.play();
         context.fillStyle = "#470b54";
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.fillRect(0, 0, canvas.width, canvas.height);
