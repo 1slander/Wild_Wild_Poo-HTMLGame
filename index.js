@@ -1,28 +1,27 @@
 window.addEventListener("load", function () {
   const canvas = document.getElementById("board");
   const ctx = canvas.getContext("2d");
-  const startBtn=document.getElementById('startGame');
-  const restartBtn=document.getElementById('restart');
-  const instructions=document.querySelector('.instructions');
-  
-  
+  const startBtn = document.getElementById("startGame");
+  const restartBtn = document.getElementById("restart");
+  const instructions = document.querySelector(".instructions");
+
   //JS Media Query
-  
-  const largeScreen = window.matchMedia('(min-width:1440px');
-  const smallScreen=window.matchMedia('(max-width:768px)');
-  
-  if(largeScreen.matches){
-    canvas.width=900;
-    canvas.height=700;
-    console.log('large screen');
-  } else if( smallScreen.matches){
-    canvas.width=500;
-    canvas.height=500;
-    console.log('small screen');
-  }else{
+
+  const largeScreen = window.matchMedia("(min-width:1440px");
+  const smallScreen = window.matchMedia("(max-width:768px)");
+
+  if (largeScreen.matches) {
+    canvas.width = 900;
+    canvas.height = 700;
+    console.log("large screen");
+  } else if (smallScreen.matches) {
+    canvas.width = 500;
+    canvas.height = 500;
+    console.log("small screen");
+  } else {
     canvas.width = 700;
     canvas.height = 500;
-    console.log('medium screen')
+    console.log("medium screen");
   }
 
   //Inputs
@@ -60,7 +59,7 @@ window.addEventListener("load", function () {
 
       this.game = game;
       this.x = this.game.width;
-      this.speedX = 1;
+      this.speedX = 2;
       this.scale = 1;
       this.dead = false;
       this.sound = kill;
@@ -176,6 +175,9 @@ window.addEventListener("load", function () {
       const reload = new Audio();
       reload.src = "./Sounds/Need more shit 2.wav";
 
+      const damage = new Audio();
+      damage.src = "./Sounds/Ah.wav";
+
       this.game = game;
       this.x = 5;
       this.y = this.game.height / 2;
@@ -190,6 +192,7 @@ window.addEventListener("load", function () {
       this.playerH = playerImg.height * this.scale;
       this.bulletSound = [shootAudio, shootAudio2, shootAudio3];
       this.reload = reload;
+      this.damage = damage;
     }
     update() {
       if (this.game.keys.includes("ArrowUp")) {
@@ -337,6 +340,7 @@ window.addEventListener("load", function () {
 
         if (this.checkCollision(this.player, enemy)) {
           enemy.dead = true;
+          this.player.damage.play();
           this.playerHp--;
           this.hp.pop();
           if (this.playerHp === 0) {
@@ -385,7 +389,7 @@ window.addEventListener("load", function () {
       if (this.pooBullets === 0) {
         context.style = "white";
         context.font = `40px  ${this.fontFamily}`;
-        context.fillText("RECHARGE", 500, 70);
+        context.fillText("RELOAD", 500, 70);
       }
       this.enemies.forEach((enemy) => {
         enemy.draw(context);
@@ -434,7 +438,7 @@ window.addEventListener("load", function () {
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.fillStyle = "white";
         context.font = `50px  ${this.fontFamily}`;
-        context.fillText("YOU WON", this.width / 2 - 100, this.height / 2);
+        context.fillText("YOU WIN", this.width / 2 - 100, this.height / 2);
         context.font = `30px  ${this.fontFamily}`;
         context.fillText(
           `Score: ${this.score}`,
@@ -447,7 +451,11 @@ window.addEventListener("load", function () {
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.fillStyle = "white";
         context.font = `50px  ${this.fontFamily}`;
-        context.fillText("Game Over", this.width / 2 - 150, this.height / 2);
+        context.fillText(
+          "YOU'VE BEEN FLUSH",
+          this.width / 2 - 220,
+          this.height / 2
+        );
         context.font = `30px  ${this.fontFamily}`;
         context.fillText(
           `Score: ${this.score}`,
@@ -471,33 +479,29 @@ window.addEventListener("load", function () {
     game.draw(ctx);
     if (game.gameOver) {
       game.endGame(ctx);
-      document.body.style.overflow='visible'
-      restartBtn.style.display='block';
+      document.body.style.overflow = "visible";
+      restartBtn.style.display = "block";
       cancelAnimationFrame;
     } else {
       requestAnimationFrame(startGame);
     }
   }
-  startBtn.addEventListener('click',()=>{
-    
-    canvas.style.display='block';
-    instructions.style.display='none';
-    startBtn.style.display='none';
-    document.body.style.overflow='hidden'
+  startBtn.addEventListener("click", () => {
+    canvas.style.display = "block";
+    instructions.style.display = "none";
+    startBtn.style.display = "none";
+    document.body.style.overflow = "hidden";
     startGame(0);
-  })
+  });
 
-  restartBtn.addEventListener('click',()=>{
-    game.gameOver=false;
-    game.score=0;
-    game.pooBullets=20;
-    game.enemies=[];
-    game.playerHp=3;
-    document.body.style.overflow='hidden'
-    restartBtn.style.display='none';
+  restartBtn.addEventListener("click", () => {
+    game.gameOver = false;
+    game.score = 0;
+    game.pooBullets = 20;
+    game.enemies = [];
+    game.playerHp = 3;
+    document.body.style.overflow = "hidden";
+    restartBtn.style.display = "none";
     startGame(0);
-    
-  })
-  
-
+  });
 });
