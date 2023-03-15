@@ -12,6 +12,13 @@ The player will control Poo and will have to avoid any paper or soap hit. Using 
 
 The player must achieve the maximum score to win.
 
+## Things to do:
+
+- Edit explosion sound volume.
+- Win Game sound?
+- 
+
+
 ## Credits:
 
 Background image design by Lou Leon @designinglou
