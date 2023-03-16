@@ -50,7 +50,7 @@ window.addEventListener("load", function () {
   class Enemy {
     constructor(game) {
       const kill = new Audio();
-      kill.src = "./Sounds/Kill.mp3";
+      kill.src = "./Sounds/Kill_edit.mp3";
 
       this.game = game;
       this.x = this.game.width;
